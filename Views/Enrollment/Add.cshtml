@@ -1,0 +1,202 @@
+﻿@{
+    ViewData["Title"] = "Enrollment Entry";
+}
+<div class="container">
+    <h2 class="text-center">Student Enrollment Entry</h2>
+
+    <!-- Student ID Search Section -->
+    <div class="row mb-3">
+        <div class="col-md-10">
+            <div class="input-group mb-2">
+                <label class="input-group-text fw-bold">Student ID</label>
+                <input id="studentId" class="form-control" placeholder="Enter ID Number Here" />
+                <button id="searchStudent" class="btn btn-secondary">Search</button>
+            </div>
+            <div class="mb-2">
+                <label class="fw-bold">Name</label>
+                <input id="studentName" class="form-control" disabled />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="fw-bold">Course</label>
+                    <input id="studentCourse" class="form-control" disabled />
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Year</label>
+                    <input id="studentYear" class="form-control" disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Subject Section -->
+    <div class="input-group mb-3">
+        <label class="input-group-text fw-bold">EDP Code</label>
+        <input id="edpCode" class="form-control" placeholder="Enter EDP Code Here" />
+        <button id="addSubject" class="btn btn-primary">Add Subject</button>
+    </div>
+
+    <!-- Subjects Table -->
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>EDP Code</th>
+                <th>Subject Code</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Days</th>
+                <th>Room</th>
+                <th>Units</th>
+                <th>*</th>
+            </tr>
+        </thead>
+        <tbody id="subjectList"></tbody>
+    </table>
+
+    <!-- Total Units -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="fw-bold">Date</label>
+            <input type="date" id="enrollmentDate" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label class="fw-bold">Total Units</label>
+            <input id="totalUnits" class="form-control" value="0" disabled />
+        </div>
+    </div>
+
+    <!-- Save Button -->
+    <button id="saveEnrollment" class="btn btn-success">Save</button>
+</div>
+
+@section Scripts {
+    <script>
+        // Fetch Student Details
+        $('#searchStudent').click(function () {
+            let studentId = $('#studentId').val();
+            if (!studentId) {
+                alert('Please enter a student ID.');
+                return;
+            }
+
+            $.get('/Enrollment/GetStudentDetails', { studentId: studentId }, function (response) {
+                if (response.success) {
+                    $('#studentName').val(response.data.name);
+                    $('#studentCourse').val(response.data.course);
+                    $('#studentYear').val(response.data.year);
+                } else {
+                    alert(response.message);
+                }
+            });
+        });
+
+        // Add Subject to Table
+        let totalUnits = 0;
+        $('#addSubject').click(function () {
+            let edpCode = $('#edpCode').val();
+            if (!edpCode) {
+                alert('Please enter an EDP Code.');
+                return;
+            }
+
+            $.get('/Enrollment/GetSubjectDetails', { edpCode: edpCode }, function (response) {
+                if (response.success) {
+                    let data = response.data;
+                    $('#subjectList').append(`
+                        <tr>
+                            <td>${data.ssfedpcode}</td>
+                            <td>${data.ssfsubjcode}</td>
+                            <td>${data.startTime}</td>
+                            <td>${data.endTime}</td>
+                            <td>${data.ssfdays}</td>
+                            <td>${data.ssfroom}</td>
+                            <td>${data.units}</td>
+                            <td><button class="btn btn-danger btn-sm remove">Remove</button></td>
+                        </tr>
+                    `);
+
+                    totalUnits += data.units;
+                    $('#totalUnits').val(totalUnits);
+                } else {
+                    alert(response.message);
+                }
+            });
+        });
+
+        // Remove Subject from Table
+        $('#subjectList').on('click', '.remove', function () {
+            let row = $(this).closest('tr');
+            let units = parseInt(row.find('td:eq(6)').text());
+            totalUnits -= units;
+            $('#totalUnits').val(totalUnits);
+            row.remove();
+        });
+
+        // Save Enrollment with Validation
+        $('#saveEnrollment').click(function () {
+            let studentId = $('#studentId').val();
+            let studentName = $('#studentName').val();
+            let studentCourse = $('#studentCourse').val();
+            let studentYear = $('#studentYear').val();
+            let enrollmentDate = $('#enrollmentDate').val();
+            let subjectCount = $('#subjectList tr').length;
+
+            // Check if all required details are filled
+            if (!studentId || !studentName || !studentCourse || !studentYear) {
+                alert('Please search and select a student before saving.');
+                return;
+            }
+
+            if (!enrollmentDate) {
+                alert('Please select the enrollment date.');
+                return;
+            }
+
+            if (subjectCount === 0) {
+                alert('Please add at least one subject before saving.');
+                return;
+            }
+
+            if (totalUnits <= 0) {
+                alert('Total units must be greater than zero.');
+                return;
+            }
+
+            // If all validations pass, show success message
+            alert('You are now enrolled, welcome to our university!');
+
+            // Optional: Submit data to server here
+            /*
+            $.post('/Enrollment/Save', {
+                studentId: studentId,
+                enrollmentDate: enrollmentDate,
+                subjects: getSubjectsData()
+            }, function(response) {
+                if (response.success) {
+                    alert('Enrollment saved successfully.');
+                    window.location.reload();
+                } else {
+                    alert('Error saving enrollment: ' + response.message);
+                }
+            });
+            */
+        });
+
+        // Function to gather subjects data (Optional for server-side logic)
+        function getSubjectsData() {
+            let subjects = [];
+            $('#subjectList tr').each(function () {
+                subjects.push({
+                    edpCode: $(this).find('td:eq(0)').text(),
+                    subjectCode: $(this).find('td:eq(1)').text(),
+                    startTime: $(this).find('td:eq(2)').text(),
+                    endTime: $(this).find('td:eq(3)').text(),
+                    days: $(this).find('td:eq(4)').text(),
+                    room: $(this).find('td:eq(5)').text(),
+                    units: parseInt($(this).find('td:eq(6)').text())
+                });
+            });
+            return subjects;
+        }
+    </script>
+}

@@ -1,0 +1,52 @@
+﻿@model Student
+<div calss="container">
+    <div clss="row">
+        <div class="col-6 offset-3">
+            <br />
+            <br />
+           
+
+            <div class="card">
+                <div style="background-color:#608862" class="card-header">
+                    <h1 class="text-center">EDIT STUDENT</h1>
+
+                </div>
+                <div style="background-color:#A6A27B" class="p-3 mb-0 bg-success-subtle text-emphasis-success" card="card-body">
+                    <form method="post" asp-action="Edit">
+                        <div class="form-floating mb-3">
+
+                            <input asp-for="STFSTUDID" class="form-control border-success" readonly class="form-control-plaintext">
+                            <label  asp-for="STFSTUDID"></label>
+
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            <input asp-for="STFSTUDLNAME" class="form-control border-success">
+                            <label asp-for="STFSTUDLNAME"></label>
+
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            <input asp-for="STFSTUDFNAME" class="form-control border-success">
+                            <label asp-for="STFSTUDFNAME"></label>
+
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            <input asp-for="STFSTUDMNAME" class="form-control border-success">
+                            <label asp-for="STFSTUDMNAME"></label>
+
+                        </div>
+                       
+
+                        <div>
+                            <button style="background-color:#608862" class="btn btn-md btn-outline-dark" type="submit">UPDATE</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

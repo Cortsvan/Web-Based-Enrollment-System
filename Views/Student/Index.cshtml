@@ -1,0 +1,103 @@
+﻿@model List<MyMVCApplication.Models.Student>
+<br />
+<div class="container-fluid">
+    <h1 style="font-size: 5rem;" class="text-center">STUDENT LIST</h1>
+</div>
+<hr />
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["AlertMessage"]
+    </div>
+}
+@if (TempData["DeleteMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["DeleteMessage"]
+    </div>
+}
+<form method="get" class="d-flex  container" asp-action="Index">
+    <div class="row offset-10 col-2">
+        <input class="form-control me-sm-2" type="text" name="SearchStudent" required="" placeholder="ENTER STUDENT ID NO:">
+        
+    </div>
+
+</form>
+<form method="get" class="d-flex" asp-controller="Home" asp-action="Index">
+    <div class="container">
+        <button style="background-color: #1f032e" class="btn btn-md text-white btn-outline-primary" type="submit">GO BACK</button>
+    </div>
+
+</form>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-15 offset-0">
+            <div class="card">
+
+                <div style="background-color:#1f032e" class="p-3 mb-0 bg-success-subtle text-emphasis-success" card="card-body">
+                    <form class="table-responsive" style="border-radius:5px;">
+                        <table class="table">
+                            <thead style="background-color: #d4d4d4; text-align:center">
+                                <tr>
+
+                                    <th scope="col">ID NO:</th>
+                                    <th scope="col">LAST NAME</th>
+                                    <th scope="col">FIRST NAME</th>
+                                    <th scope="col">MIDDLE NAME</th>
+                                    <th scope="col">COURSE</th>
+                                    <th scope="col">YEAR</th>
+                                    <th scope="col">REMARKS</th>
+                                    <th scope="col">STATUS</th>
+                                    <th scope="col">EDIT</th>
+                                    <th scope="col">DELETE</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background-color:white; text-align:center">
+
+
+                                @foreach (var student in Model)
+                                {
+                                    <tr>
+                                        <td>@student.STFSTUDID</td>
+                                        <td>@student.STFSTUDLNAME</td>
+                                        <td>@student.STFSTUDFNAME</td>
+                                        <td>@student.STFSTUDMNAME</td>
+                                        <td>@student.STFSTUDCOURSE</td>
+                                        <td>@student.STFSTUDYEAR</td>
+                                        <td>@student.STFSTUDREMARKS</td>
+                                        <td>@student.STFSTUDSTATUS</td>
+                                        <td>
+                                            <div class="w-75 btn-group" role="group">
+                                                <a asp-controller="Student" asp-action="Edit" asp-route-StudentId="@student.STFSTUDID"
+                                                   style="background-color:#608862" class="btn btn-md btn-outline-dark">Edit</a>
+                                            </div>
+
+                                        </td>
+                                        <td>
+
+                                            <div class="w-75 btn-group" role="group">
+                                                <form method="post" asp-controller="Student" asp-action="Delete" asp-route-StudentId="@student.STFSTUDID">
+                                                    <button style=" background-color:#ED2939" class="btn btn-md btn-outline-dark" type="submit">
+                                                        Delete
+                                                    </button>
+                                                </form>
+
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+                           </tbody>
+
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

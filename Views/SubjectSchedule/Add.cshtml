@@ -1,0 +1,196 @@
+﻿@model SubjectSchedule
+@{
+    ViewData["Title"] = "Add New Subject Schedule";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<br />
+<div class="card-header text-white" style="border-radius:24px; background-color:#1f032e">
+    <h1 class="text-center" style="font-size: 5rem;">ADD SUBJECT SCHEDULE</h1>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <!-- Check for Errors (Display TempData) -->
+                    @if (TempData["DuplicateError"] != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @TempData["DuplicateError"]
+                        </div>
+                    }
+                    @if (TempData["ScheduleAdded"] != null)
+                    {
+                        <div class="alert alert-success text-center">
+                            @TempData["ScheduleAdded"]
+                        </div>
+                    }
+
+                    <!-- Form -->
+                    <form method="post" asp-action="Add">
+                        <!-- EDP CODE -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFEDPCODE" type="text" class="form-control border-success" id="SSFEDPCODE" placeholder="EDP Code" required />
+                                    <label asp-for="SSFEDPCODE">EDP Code</label>
+                                    <span asp-validation-for="SSFEDPCODE" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUBJECT CODE SEARCH -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFSUBJCODE" id="subjectCodeInput" type="text" class="form-control border-success" placeholder="Subject Code" required />
+                                    <label asp-for="SSFSUBJCODE">Subject Code</label>
+                                    <span asp-validation-for="SSFSUBJCODE" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-2 text-center">
+                                <button type="button" id="searchSubjectBtn" class="btn btn-success btn-lg mt-2">Search</button>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="subjectDescription" class="form-control border-success" readonly placeholder="Subject Description" />
+                                    <label for="subjectDescription">Subject Description</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CLASS SIZE -->
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFCLASSSIZE" type="number" class="form-control border-success" placeholder="Class Size" min="0" id="classSizeInput" />
+                                    <label asp-for="SSFCLASSSIZE">Class Size</label>
+                                    <span asp-validation-for="SSFCLASSSIZE" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- START TIME & END TIME -->
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFSTARTTIME" type="time" class="form-control border-success" />
+                                    <label asp-for="SSFSTARTTIME">Start Time</label>
+                                    <span asp-validation-for="SSFSTARTTIME" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFENDTIME" type="time" class="form-control border-success" />
+                                    <label asp-for="SSFENDTIME">End Time</label>
+                                    <span asp-validation-for="SSFENDTIME" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DAYS & ROOM -->
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFDAYS" type="text" class="form-control border-success" />
+                                    <label asp-for="SSFDAYS">Days</label>
+                                    <span asp-validation-for="SSFDAYS" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFROOM" type="text" class="form-control border-success" />
+                                    <label asp-for="SSFROOM">Room</label>
+                                    <span asp-validation-for="SSFROOM" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STATUS DROPDOWN -->
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="SSFSTATUS" class="form-select">
+                                        <option value="Open">Open</option>
+                                        <option value="Close">Close</option>
+                                    </select>
+                                    <label for="SSFSTATUS">Status</label>
+                                    <span asp-validation-for="SSFSTATUS" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="SSFSCHOOLYEAR" type="text" class="form-control border-success" />
+                                    <label asp-for="SSFSCHOOLYEAR">School Year</label>
+                                    <span asp-validation-for="SSFSCHOOLYEAR" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SUBMIT BUTTON -->
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-lg btn-outline-dark text-white" style="background-color:#7c06d4;" value="Save Schedule" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Subject Code Search and Class Size Validation -->
+<script>
+    // Subject Code Search
+    $("#searchSubjectBtn").click(function () {
+        var subjectCode = $("#subjectCodeInput").val();
+
+        if (subjectCode) {
+            $.ajax({
+                url: "/SubjectSchedule/SubjectVerify",
+                type: "GET",
+                data: { subjectCode: subjectCode },
+                success: function (data) {
+                    if (data.description) {
+                        $("#subjectDescription").val(data.description);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Subject Code not found!'
+                        });
+                        $("#subjectDescription").val("");
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to verify subject code.'
+                    });
+                }
+            });
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: 'Please enter a Subject Code first.'
+            });
+        }
+    });
+
+    // Class Size Validation (Non-Negative)
+    $("#classSizeInput").on("input", function () {
+        if ($(this).val() < 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Input',
+                text: 'Class Size cannot be negative!'
+            });
+            $(this).val(0); // Reset value to 0
+        }
+    });
+</script>

@@ -1,0 +1,117 @@
+﻿ @model Student
+@{
+
+    ViewData["Title"] = "Add New Student";
+}
+
+<div  class="container">
+
+    <div class="row">
+        <div class="col-6 offset-3">
+            <br />
+            <br />
+            @{
+                var studentAddedMessage = TempData["StudentAdded"] as string;
+            }
+
+            @if (!string.IsNullOrEmpty(studentAddedMessage))
+            {
+                <div class="alert alert-success">
+                    @studentAddedMessage
+                </div>
+            }
+            @if (TempData["DuplicateError"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["DuplicateError"]
+                </div>
+            }
+            
+                <div style="color:white; border-radius: 25px; background-color:#12011f" class="card-header">
+                    <h1 style="font-size: 5rem;" class="text-center">ADD STUDENT</h1>
+                </div>
+                 <br />
+
+            <div class="card">
+                <div style="background-color:#1f032e" class="p-3 mb-0 bg-success-subtle text-emphasis-success" card="card-body">
+                    <form method="post" asp-action="Add">
+                        <div class="form-floating mb-3">
+                            <input asp-for="STFSTUDID" type="text" class="form-control border-success" id="floatingInput">
+                            <label asp-for="STFSTUDID" for="floatingInput">ID N0:</label>
+                            <span asp-validation-for="STFSTUDID" class="text-danger"></span>
+                            
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="STFSTUDLNAME" type=" text" class="form-control border-success" id="floatingInput">
+                            <label asp-for="STFSTUDLNAME" for="floatingInput">LAST NAME:</label>
+                            <span asp-validation-for="STFSTUDLNAME" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="STFSTUDFNAME" type=" text" class="form-control border-success" id="floatingInput">
+                            <label asp-for="STFSTUDFNAME" for="floatingInput">FIRST NAME:</label>
+                            <span asp-validation-for="STFSTUDFNAME" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="STFSTUDMNAME" type=" text" class="form-control border-success" id="floatingInput">
+                            <label asp-for="STFSTUDMNAME" for="floatingInput">MIDDLE NAME:</label>
+                            <span asp-validation-for="STFSTUDMNAME" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select asp-for="STFSTUDCOURSE" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                               
+                                <option value="">SELECT</option>
+                                <option value="BSIT">BSIT</option>
+                                <option value="BSIS">BSIS</option>
+                                <option value="BSCPE">BSCPE</option>
+                                <option value="BSN">BSN</option>
+                                <option value="BSCRIM">BSCRIM</option>
+                            </select>
+                            <label for="floatingSelect">COURSE</label>
+                            <span asp-validation-for="STFSTUDCOURSE" class="text-danger"></span>
+                        </div> 
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="STFSTUDYEAR" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <option value="">SELECT</option>
+                                <option value="1">1st</option>
+                                <option value="2">2nd</option>
+                                <option value="3">3rd</option>
+                                <option value="4">4th</option>
+                            </select>
+                            <label for="floatingSelect">YEAR</label>
+                            <span asp-validation-for="STFSTUDYEAR" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3" data-bs-toggle="dropdown">
+                            <select asp-for="STFSTUDREMARKS" class="form-select" id="selectedRemarks" aria-label="Floating label select example">
+                                <option value="">SELECT</option>
+                                <option value="SHIFTEE">SHIFTEE</option>
+                                <option value="TRANSFEREE">TRANSFEREE</option>
+                                <option value="NEW">NEW</option>
+                                <option value="OLD">OLD</option>
+                                <option value="CROSS-ENROLLEE">CROSS-ENROLLEE</option>
+                            </select>
+                            <label for="floatingSelect">REMARKS</label>
+                            <span asp-validation-for="STFSTUDREMARKS" class="text-danger"></span>
+                        </div>                 
+                        <div style="text-align:center">
+                            <input style="background-color:#7c06d4" class="btn btn-lg btn-outline-dark" type="submit" value="Submit" btn-sm btn-success float-right />
+                        </div>
+                        
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@if(TempData.ContainsKey("AlertMessage")){
+    <script>
+
+        var alertMessage = '@TempData["AlertMessage"]';
+        Swal.fire({
+            icon:'Success',
+            title: 'Success',
+            text: alertMessage,
+        });
+    </script>
+}*@

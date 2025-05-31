@@ -1,0 +1,55 @@
+﻿@model Subject
+<div calss="container">
+    <div clss="row">
+        <div class="col-6 offset-3">
+            
+           <br />
+           <br />
+           
+            <div class="card">
+                <div style="background-color:#608862" class="card-header">
+                    <h1 class="text-center">EDIT SUBJECT</h1>
+                 
+                </div>
+                <div style="background-color:#A6A27B" class="p-3 mb-0 bg-success-subtle text-emphasis-success" card="card-body">
+                    <form method="post" asp-action="Edit">
+                        <div class="form-floating mb-3">
+
+                            <input asp-for="SFSUBJCODE" class="form-control border-success" readonly class="form-control-plaintext">
+                            <label asp-for="SFSUBJCODE"></label>
+
+                        </div>
+                        <div class="form-floating mb-3">
+                          
+                            <input asp-for="SFSUBJDESC" class="form-control border-success" >
+                            <label asp-for="SFSUBJDESC"></label>
+
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            <input asp-for="SFSUBJCATEGORY" class="form-control border-success">
+                            <label asp-for="SFSUBJCATEGORY"></label>
+
+                        </div>
+                        <div class="form-floating mb-3">
+
+                            <input asp-for="SFSUBJUNITS" type="text" class="form-control border-success">
+                            <label asp-for="SFSUBJUNITS"></label>
+
+                        </div>
+
+                        <div>
+                            <button style ="background-color:#608862" class="btn btn-md btn-outline-dark" type="submit">UPDATE</button>
+                        </div>
+                       
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+                  

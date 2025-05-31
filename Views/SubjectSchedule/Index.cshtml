@@ -1,0 +1,98 @@
+﻿@model List<MyMVCApplication.Models.SubjectSchedule>
+
+<br />
+<div class="container-fluid">
+    <h1 style="font-size: 5rem;" class="text-center">SUBJECT SCHEDULE</h1>
+</div>
+<br />
+
+<!-- Search and Add Buttons -->
+<div class="row mb-3">
+    <div class="col-10">
+        <form method="get" class="d-flex" asp-action="Index">
+            <div class="input-group">
+                <input class="form-control" type="text" name="searchEdpCode" placeholder="Search by EDP Code" aria-label="Search EDP Code" value="@Context.Request.Query["searchEdpCode"]" />
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-2 text-end">
+        <a asp-action="Add" class="btn text-white" style="background-color:#1f032e;">Add New</a>
+    </div>
+</div>
+
+<!-- Display Notifications -->
+@if (TempData["ScheduleAdded"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["ScheduleAdded"]</div>
+}
+@if (TempData["DuplicateError"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["DuplicateError"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">@TempData["Error"]</div>
+}
+
+<!-- Subject Schedule Table -->
+<div class="card">
+    <div class="card-header text-white text-center" style="background-color:#1f032e;">
+        <h3>List of Subject Schedules</h3>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-secondary text-center">
+                <tr>
+                    <th scope="col">EDP CODE</th>
+                    <th scope="col">SUBJECT CODE</th>
+                    <th scope="col">CLASS SIZE</th>
+                    <th scope="col">START TIME</th>
+                    <th scope="col">END TIME</th>
+                    <th scope="col">DAYS</th>
+                    <th scope="col">ROOM</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">SCHOOL YEAR</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @if (Model != null && Model.Count > 0)
+                {
+                    @foreach (var subjectSchedule in Model)
+                    {
+                        <tr>
+                            <td>@subjectSchedule.SSFEDPCODE</td>
+                            <td>@subjectSchedule.SSFSUBJCODE</td>
+                            <td>@subjectSchedule.SSFCLASSSIZE</td>
+                            <td>@subjectSchedule.SSFSTARTTIME?.ToString("hh:mm tt")</td>
+                            <td>@subjectSchedule.SSFENDTIME?.ToString("hh:mm tt")</td>
+                            <td>@subjectSchedule.SSFDAYS</td>
+                            <td>@subjectSchedule.SSFROOM</td>
+                            <td>@subjectSchedule.SSFSTATUS</td>
+                            <td>@subjectSchedule.SSFSCHOOLYEAR</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" class="text-center text-danger">No Subject Schedules Found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JavaScript (Optional Row Click Interaction) -->
+<script>
+    $(document).ready(function () {
+        $('table tr').click(function () {
+            var edpCode = $(this).find('td:first').text();
+            if (edpCode) {
+                window.location.href = '@Url.Action("Details", "SubjectSchedule")' + "?edpCode=" + edpCode;
+            }
+        });
+    });
+</script>

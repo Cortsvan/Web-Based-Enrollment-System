@@ -1,0 +1,125 @@
+﻿@model MyMVCApplication.Models.Account
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+@{
+    ViewData["Title"] = "Login Page";
+}
+<br />
+
+<div class="login-page">
+    <div class="login-container">
+        <div class="text-center mb-4">
+            <img src="https://img.freepik.com/free-vector/gradient-high-school-logo-design_23-2149626932.jpg" class="img-thumbnail logo-img">
+        </div>
+        <h2 class="text-center mb-4">Welcome to Cortes&Tomas University</h2>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+        <form asp-controller="Account" asp-action="Login" method="post">
+            <div class="form-group mb-3">
+                <label for="Name" class="form-label">Email Address</label>
+                <input asp-for="Name" class="form-control" id="Name" placeholder="Enter your email">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-4">
+                <label for="Password" class="form-label">Password</label>
+                <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Enter your password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-block" type="submit">LOG IN</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom, #ECEBDE, #D7D3BF);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .login-container {
+        background: #A59D84;
+        color: #ECEBDE;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: 400px;
+        text-align: center;
+    }
+
+    .logo-img {
+        max-width: 100px;
+        border-radius: 50%;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        color: #ECEBDE;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .form-label {
+        color: #ECEBDE;
+        text-align: left;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #D7D3BF;
+        padding: 10px;
+    }
+
+    .btn-primary {
+        background: #C1BAA1;
+        border: none;
+        color: #ECEBDE;
+        padding: 10px;
+        border-radius: 10px;
+        transition: background 0.3s;
+    }
+
+        .btn-primary:hover {
+            background: #A59D84;
+        }
+
+    .text-primary {
+        color: #D7D3BF;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .text-primary:hover {
+            text-decoration: underline;
+        }
+</style>

@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Enrollment Portal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* General Layout Styling */
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #ECEBDE, #D7D3BF);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        header, main {
+            flex: 0 0 auto;
+        }
+
+        main {
+            flex: 1 0 auto;
+            padding-top: 5rem;
+        }
+
+        footer {
+            flex-shrink: 0;
+            background: #A59D84;
+            color: #ECEBDE;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: linear-gradient(to right, #A59D84, #C1BAA1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #ECEBDE !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ECEBDE;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #D7D3BF;
+                transform: scale(1.1);
+            }
+
+        .nav-item::after {
+            content: '';
+            opacity: 0;
+            transition: all 0.3s;
+            height: 2px;
+            width: 100%;
+            background-color: #D7D3BF;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .nav-item:hover::after {
+            opacity: 1;
+        }
+
+        .navbar-collapse {
+            justify-content: center;
+        }
+
+        .navbar-brand {
+            position: absolute;
+            left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        @if (!(ViewContext.RouteData.Values["Controller"]?.ToString() == "Account" &&
+        ViewContext.RouteData.Values["Action"]?.ToString() == "Login"))
+        {
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cortes&Tomas</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarColor02">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i> STUDENT ENTRY</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Student" asp-action="Index">STUDENT LIST</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Student" asp-action="Add">ADD STUDENT</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa-solid fa-book"></i> SUBJECT ENTRY</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Subject" asp-action="Index">SUBJECT LIST</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Subject" asp-action="Add">ADD SUBJECT</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa-regular fa-calendar-days"></i> SCHEDULE ENTRY</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-controller="SubjectSchedule" asp-action="Index">SCHEDULE LIST</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="SubjectSchedule" asp-action="Add">ADD SCHEDULE</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-file-pen"></i> ENROLLMENT ENTRY</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Enrollment" asp-action="Add">ADD ENROLLMENT</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        }
+    </header>
+
+    <main role="main">
+        <div class="container pb-3">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            University of Cortes&Tomas &copy; 2024
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

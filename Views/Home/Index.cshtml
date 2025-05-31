@@ -1,0 +1,224 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="container mt-5"></div>
+<div class="text-center" style="background-color: #A59D84; color: #ECEBDE; padding: 50px; border-radius: 35px; font-family: 'Palatino Linotype', 'Georgia', serif;">
+    <h1 class="display-4">Welcome to University of Cortes&Tomas</h1>
+    <p class="lead" style="color: #ECEBDE;">Your gateway to seamless student enrollment.</p>
+    <p style="color: #ECEBDE;">Experience a new way of managing your education with our easy-to-use platform.</p>
+    <a class="btn btn-started btn-lg" asp-controller="Students" asp-action="Add" role="button" style="color: #ECEBDE;">Get Started</a>
+</div>
+<br />
+<div class="d-flex justify-content-center align-items-center" style="height:5vh;">
+    <div class="spinner-grow spinner-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow spinner-primary mx-2" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow spinner-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div class="container mt-5" style="font-family: 'Times New Roman', 'Palatino Linotype', serif;">
+    <div class="row">
+        <!-- Flipping Card 1 -->
+        <div class="col-md-4">
+            <div class="card-flip">
+                <div class="card front">
+                    <div class="card-body" style="background-color: #A59D84; color: black;">
+                        <h5 class="card-title">Fast Registration</h5>
+                        <p class="card-text">Register quickly with our intuitive interface.</p>
+                    </div>
+                </div>
+                <div class="card back">
+                    <div class="card-body" style="background-color: #C1BAA1; color: black;">
+                        <p class="card-text">Quick, easy, and efficient registration for students.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flipping Card 2 -->
+        <div class="col-md-4">
+            <div class="card-flip">
+                <div class="card front">
+                    <div class="card-body" style="background-color: #A59D84; color: black;">
+                        <h5 class="card-title">Student Management</h5>
+                        <p class="card-text">Easily manage student records and information.</p>
+                    </div>
+                </div>
+                <div class="card back">
+                    <div class="card-body" style="background-color: #ECEBDE; color: black;">
+                        <p class="card-text">Organize and access student information seamlessly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flipping Card 3 -->
+        <div class="col-md-4">
+            <div class="card-flip">
+                <div class="card front">
+                    <div class="card-body" style="background-color: #A59D84; color: black;">
+                        <h5 class="card-title">Under Development</h5>
+                        <p class="card-text">Currently in its alpha phase.</p>
+                    </div>
+                </div>
+                <div class="card back">
+                    <div class="card-body" style="background-color: #C1BAA1; color: black;">
+                        <p class="card-text">Stay tuned for upcoming features!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image placeholders with images -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="https://wallpapers.com/images/hd/anime-school-background-dh3ommnxthw4nln7.jpg" class="img-fluid rounded" style="border-radius: 15px; object-fit: cover; height: 250px; width: 100%;" alt="Anime School Background">
+        </div>
+        <div class="col-md-4">
+            <img src="https://img.freepik.com/premium-photo/empty-classroom-with-tables-chairs_334364-13576.jpg" class="img-fluid rounded" style="border-radius: 15px; object-fit: cover; height: 250px; width: 100%;" alt="Empty Classroom">
+        </div>
+        <div class="col-md-4">
+            <img src="https://assetstorev1-prd-cdn.unity3d.com/key-image/09879b38-620c-4814-9309-2a00658baaae.jpg?v=1" class="img-fluid rounded" style="border-radius: 15px; object-fit: cover; height: 250px; width: 100%;" alt="Unity Classroom Background">
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-5" style="color: black; font-family: 'Palatino Linotype', 'Georgia', serif;">
+    <h2>Join Us Today!</h2>
+    <p>Become part of a community that values education and innovation.</p>
+    <button class="btn btn-outline-light btn-lg" style="color: #D7D3BF; border-color: #C1BAA1; background-color: #A59D84;" onclick="showLearnMore()">Learn More</button>
+</div>
+
+<!-- Learn More Modal -->
+<div id="learnMoreModal" class="modal" style="display: none;">
+    <div class="modal-content" style="background-color: #A59D84; font-family: 'Georgia', serif;">
+        <span class="close" onclick="hideLearnMore()">&times;</span>
+        <h2 style="color: #ECEBDE;">Welcome to Cortes&Tomas University</h2>
+        <p style="color: #ECEBDE;">
+            We are dedicated to providing a seamless and innovative educational experience. Join our community
+            and take the first step towards your future. Explore opportunities, connect with peers, and achieve
+            your academic goals with us.
+        </p>
+    </div>
+</div>
+
+<script>
+    function showLearnMore() {
+        document.getElementById('learnMoreModal').style.display = 'flex';
+    }
+
+    function hideLearnMore() {
+        document.getElementById('learnMoreModal').style.display = 'none';
+    }
+</script>
+
+<style>
+    /* Modal Styles */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        color: #ECEBDE;
+        border-radius: 15px;
+        padding: 30px;
+        width: 50%;
+        max-width: 600px;
+        text-align: center;
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: #D7D3BF;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* Flip Card Styles */
+    .card-flip {
+        position: relative;
+        width: 100%;
+        perspective: 1000px;
+    }
+
+        .card-flip .card {
+            width: 100%;
+            height: 200px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: absolute;
+        }
+
+        .card-flip:hover .card {
+            transform: rotateY(180deg);
+        }
+
+        .card-flip .front,
+        .card-flip .back {
+            backface-visibility: hidden;
+        }
+
+        .card-flip .back {
+            transform: rotateY(180deg);
+        }
+
+    /* Footer Fixing */
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #A59D84;
+        color: #ECEBDE;
+        text-align: center;
+        padding: 10px;
+        z-index: 1000;
+    }
+
+    /* Buttons */
+    .btn-started {
+        border-color: #C1BAA1;
+        background-color: #D7D3BF;
+        color: #ECEBDE;
+    }
+
+        .btn-started:hover {
+            background-color: #A59D84;
+            color: #1f032e;
+        }
+
+    .btn-outline-light {
+        border-color: #C1BAA1;
+        color: #D7D3BF;
+    }
+
+        .btn-outline-light:hover {
+            background-color: #A59D84;
+            color: #1f032e;
+        }
+
+    .spinner-primary {
+        color: #C1BAA1;
+    }
+</style>

@@ -1,0 +1,117 @@
+﻿@model List<MyMVCApplication.Models.Subject>
+<br />
+<h1 style="font-size: 5rem;" class="text-center">SUBJECT LIST</h1>
+<hr/>
+@if (TempData["editSubject"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["editSubject"]
+    </div>
+}
+@if (TempData["DeleteSubject"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["DeleteSubject"]
+    </div>
+}
+<form class="container"  method="get" class="d-flex" asp-action="Index">
+    <div class="row offset-10 col-2"> 
+        <input class="form-control me-sm-2" type="text" name="SearchSubject" required="" placeholder="ENTER SUBJECT CODE">
+        
+    </div>
+    
+</form>
+<form method="get" class="d-flex" asp-action="SubjectRequisite">
+    <div class="container">
+        <button style="background-color:#1f032e" class="btn text-white btn-md btn-outline-dark" type="submit">VIEW REQUISITE</button>
+    </div>
+</form>
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-15 offset-0">
+            <div class="card">
+                
+                <div style="background-color:#1f032e" class="p-3 mb-0 bg-success-subtle w-auto p-3 text-emphasis-success" card="card-body">
+                    <form class="table-responsive">
+                        <table class="table">
+                            <thead style="background-color:#d4d4d4; text-align:center">
+                                <tr>
+
+                                    <th scope="col">SUBJECT CODE</th>
+                                    <th scope="col">DESCRIPTION</th>
+                                    <th scope="col">UNITS</th>
+                                    <th scope="col">OFFERING</th>
+                                    <th scope="col">CATEGORY</th>
+                                    <th scope="col">COURSE CODE</th>
+                                    <th scope="col">REQUISITE CODE</th>
+                                    <th scope="col">INFO</th>
+                                    <th scope="col">CURRICULUM CODE</th>
+                                    <th scope="col">STATUS</th>
+                                    <th scope="col">EDIT</th>
+                                    <th scope="col">DELETE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @foreach (var subject in Model)
+                                {
+                                    <tr style="background-color:white; text-align:center">
+                                        <td>@subject.SFSUBJCODE</td>
+                                        <td>@subject.SFSUBJDESC</td>
+                                        <td>@subject.SFSUBJUNITS</td>
+                                        <td>@subject.SFSUBJREGOFRNG</td>
+                                        <td>@subject.SFSUBJCATEGORY</td>
+                                        <td>@subject.SFSUBJCOURSECODE</td>
+                                        <td>@subject.SFSUBJREQ</td>
+                                        <td>@subject.SFSUBJCODEREQ</td>
+                                        <td>@subject.SFSUBJCURRICULUMCOURSECODE</td>
+                                        <td>@subject.SFSUBJECTSTATUS</td>
+                                        <td>
+                                            <div class="w-75 btn-group" role="group">
+                                                <a asp-controller="Subject" asp-action="Edit" asp-route-SubCode="@subject.SFSUBJCODE"
+                                                   style="background-color: greenyellow" class="btn btn-md btn-outline-dark">Edit</a>
+                                            </div>
+
+                                        </td>
+                                        <td>    
+                                            <div class="w-60 btn-group" role="group">
+                                                <form method="post" asp-controller="Subject" asp-action="Delete" asp-route-SubCode="@subject.SFSUBJCODE">
+                                                    <button style=" background-color:#ED2939" class="btn btn-md btn-outline-dark" type="submit">
+                                                       Delete  
+                                                       </button>
+                                              </form>
+                                                
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                         
+                        </table>
+                        <form method="get" class="container text-center" asp-action="Add">
+                            <div class="container">
+                                <button class="btn btn-primary text-white btn-md btn-outline-info" type="submit">GO BACK</button>
+                            </div>
+
+                        </form>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    table{
+    border-collapse: collapse;
+    margin: 0;
+    width:100%;
+    }
+   
+    
+    
+
+</style>

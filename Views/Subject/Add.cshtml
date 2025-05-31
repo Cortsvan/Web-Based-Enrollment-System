@@ -1,0 +1,219 @@
+﻿@model Subject
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@{
+    ViewData["Title"] = "Add A New Subject";
+}
+
+<div calss ="container">
+    <div clss="row">
+        <div class="col-6 offset-3">
+            <br />
+            <br />
+            @{
+                var subjectAddedMessage = TempData["SubjectAdded"] as string;
+            }
+
+            @if (!string.IsNullOrEmpty(subjectAddedMessage))
+            {
+                <div class="alert alert-success">
+                    @subjectAddedMessage
+                </div>
+            }
+            @if (TempData["DuplicateError"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["DuplicateError"]
+                </div>
+            }
+            <div style="border-radius:24px; background-color:#12011f" class="card-header text-white">
+                 <h1 style="font-size: 5rem;" class="text-center">ADD SUBJECT</h1>
+            </div>
+            <br />
+            <div class="card">           
+                <div style="background-color:#12011f" class="p-3 mb-0 bg-success-subtle text-emphasis-success" card="card-body">
+                    <form   method="post" asp-action="Add">
+                        <div class="form-floating mb-3">
+                            <input asp-for="SFSUBJCODE" type=" text" class="form-control border-success" id="floatingInput" >
+                            <label asp-for="SFSUBJCODE"  for="floatingInput">SUBJECT CODE</label>
+                            <span asp-validation-for="SFSUBJCODE" class="text-danger"></span>
+                        </div> 
+                       
+                        <div class="form-floating mb-3">
+                            <input asp-for="SFSUBJDESC" type=" text" class="form-control border-success" id="floatingInput">
+                            <label asp-for="SFSUBJDESC" for="floatingInput">SUBJECT DESCRIPTION</label>
+                            <span asp-validation-for="SFSUBJDESC" class="text-danger"></span>
+                        </div>
+                       
+                        <div class="form-floating mb-3">
+                            <input asp-for="SFSUBJUNITS" type=" text" class="form-control border-success" id="floatingInput">
+                            <label asp-for="SFSUBJUNITS" for="floatingInput">UNITS</label>
+                            <span asp-validation-for="SFSUBJUNITS" class="text-danger"></span>
+                        </div>
+                        <p class="fs-6 text-white" style="text-align:center">REQUISITE INFORMATION</p>
+                      
+                        @*<div class="center-content">
+                            <div class="form-check-floating mb-3 form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineRadioOptions1" name="radBtnOptions" value="CO" asp-for="SFSUBJREQ"> 
+                                <label class="form-check-label" for="inlineRadioOption1">CO-REQUISITE</label>
+                            </div>
+                            <div class="form-check-floating mb-3 form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineRadioOptions2" name="radBtnOptions" value="PRE" asp-for="SFSUBJREQ">
+                                <label class="form-check-label" for="inlineRadioOption2">PRE-REQUISITE</label>
+                            </div>
+                        </div>*@
+                        <div class="center-content">
+                            <div class="form-check-floating text-white mb-3 form-check-inline">
+                                <input class="form-check-input" type="radio" id="Pre" name="select" onclick="selected()"> 
+                                <label for="pre">Pre</label>
+                            </div>
+                            <div class="form-check-floating text-white mb-3 form-check-inline">
+                                <input class="form-check-input" type="radio" id="Co" name="select" onclick="selected()">
+                                <label for="co">Co</label>
+                            </div>
+                        </div>
+                        @*<div>
+                            <label for="units" class="form-control border-success"> Subject Code:</label>
+
+                        </div>*@
+                        @*<input asp-for="SFSUBJCODEREQ" type=" text" id="selectedReq" class="form-control border-success" disabled>
+                        <input asp-for="SFSUBJCODEREQ" type=" text" id="selectedReq" class="form-control border-success" disabled>*@
+                        <div class="form-floating mb-3">
+                            <input asp-for="SFSUBJCODEREQ" type="text" id="Coreq" class="form-control border-success" >
+                            <input asp-for="SFSUBJREQ" type="hidden" id="selectedReq" class="form-control border-success" >
+                            @*<input asp-for="SFSUBJCODEREQ" type=" text" id="selectedReq" class="form-control border-success" disabled>
+                            <label for="requisite">REQUISITE CODE</label>
+                            <span asp-validation-for="SFSUBJCODEREQ" class="text-danger"></span>*@
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select asp-for="SFSUBJREGOFRNG" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+
+                                <option value="">SELECT</option>
+                                <option value="1st-SEM">1st</option>
+                                <option value="2nd-SEM">2nd</option>
+                                <option value="SUMMER">SUMMER</option>
+                             
+                            </select>
+                            <label for="floatingSelect">OFFERING</label>
+                            <span asp-validation-for="SFSUBJREGOFRNG" class="text-danger"></span>
+                        </div>
+                     
+                        <div class="form-floating mb-3">
+                            <select asp-for="SFSUBJCATEGORY" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+
+                                <option value="">SELECT</option>
+                                <option value="LAB">LAB</option>
+                                <option value="LEC">LEC</option>
+
+                            </select>
+                            <label for="floatingSelect">CATEGORY</label>
+                            <span asp-validation-for="SFSUBJCATEGORY" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select asp-for="SFSUBJCOURSECODE" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+
+                                <option value="">SELECT</option>
+                                <option value="BSIT">BSIT</option>
+                                <option value="BSIS">BSIS</option>
+                                <option value="BSCPE">BSCPE</option>
+                                <option value="BSN">BSN</option>
+                                <option value="BSCRIM">BSCRIM</option>
+
+                            </select>
+                            <label for="floatingSelect">COURSE CODE</label>
+                            <span asp-validation-for="SFSUBJCOURSECODE" class="text-danger"></span>
+                        </div>
+                     
+                      
+                        <div class="form-floating mb-3">
+                            <input asp-for="SFSUBJCURRICULUMCOURSECODE" type=" text" class="form-control border-success" id="floatingInput">
+                            <label asp-for="SFSUBJCURRICULUMCOURSECODE" for="floatingInput">CURRICULUM CODE</label>
+                            <span asp-validation-for="SFSUBJCURRICULUMCOURSECODE" class="text-danger"></span>
+                        </div>
+                      
+                        <div style ="text-align:center">
+                            <input style="background-color:#870be3" class="btn btn-lg btn-outline-dark text-white" type="submit" value="Submit" btn-sm btn-success float-right />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .center-content 
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<script>
+    function selected(){
+        var radio1 = document.getElementById("Co");
+        var radio2 = document.getElementById("Pre");
+        var txtbox = document.getElementById("selectedReq");
+        var Coreq = document.getElementById("Coreq");
+        if(radio1.checked){
+            radio2.checked = false;
+            txtbox.value = 'Co';
+            Coreq.value = 'N.A';
+        }
+       else if(radio2.checked){
+            radio1.checked = false;
+            txtbox.value ='Pre';
+            Coreq.value = '';
+        }
+    }
+    //$(document).ready(function () {
+    //    $('input[name="radBtnOptions"]').on('change', function () {
+    //        if (this.value === 'PRE') {
+    //            $('#SFSUBJCODEREQ').prop('disabled', false);
+    //            $('#selectedReq').val('PRE');
+    //            $('#SFSUBJCODEREQ').val('');
+    //        } else {
+    //            $('#SFSUBJCODEREQ').prop('disabled', true);
+    //            $('#SFSUBJCODEREQ').val('N.A');
+    //            $('#selectedReq').val('CO'); 
+    //        }
+    //    });
+    //});
+</script>
+@*<!DOCTYPE html>
+<html>
+<head>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="center-content">
+        <div class="form-check-floating mb-3 form-check-inline">
+            <input class="form-check-input" type="radio" id="inlineRadioOptions1" name="radBtnOptions" value="PRE">
+            <label class="form-check-label" for="inlineRadioOptions1">PRE</label>
+        </div>
+        <div class="form-check-floating mb-3 form-check-inline">
+            <input class="form-check-input" type="radio" id="inlineRadioOptions2" name="radBtnOptions" value="CO">
+            <label class="form-check-label" for="inlineRadioOptions2">CO</label>
+        </div>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control border-success" id="SFSUBJCODEREQ" name="selectedReq" disabled>
+        <label for="requisite">REQUISITE CODE</label>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('input[name="radBtnOptions"]').on('change', function () {
+                if (this.value === 'PRE') {
+                    $('#SFSUBJCODEREQ').prop('disabled', false);
+                    $('#SFSUBJCODEREQ').val('');
+                } else {
+                    $('#SFSUBJCODEREQ').prop('disabled', true);
+                    $('#SFSUBJCODEREQ').val('N.A');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+*@

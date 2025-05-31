@@ -1,0 +1,79 @@
+﻿@model List<MyMVCApplication.Models.Subject>
+<br />
+<h1>Requisites</h1>
+<hr />
+@*@if (TempData["editSubject"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["editSubject"]
+    </div>
+}
+@if (TempData["DeleteSubject"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["DeleteSubject"]
+    </div>
+}*@
+<form method="get" class="d-flex" asp-action="Index">
+    <div class="container">
+        <button style="background-color:#C3B091" class="btn btn-md btn-outline-dark" type="submit">GO BACK</button>
+    </div>
+
+</form>
+@*<form method="get" class="d-flex" asp-action="Requisite">
+    <div>
+        <button style="background-color:#608862" class="btn btn-md btn-outline-dark" type="submit">VIEW REQUISITE</button>
+    </div>
+
+</form>*@
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-15 offset-0">
+            <div class="card">
+
+                <div style="background-color:#608862" class="p-3 mb-0 bg-success-subtle text-emphasis-success" card="card-body">
+                    <form class="table-responsive">
+                        <table class="table">
+                            <thead style="background-color:#C3B091; text-align:center">
+                                <tr>
+
+                                    <th scope="col">SUBJECT CODE</th> 
+                                    <th scope="col">COURSE CODE</th>
+                                    <th scope="col">REQUISITE CODE</th>
+                                    <th scope="col">INFO</th>
+                                    
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @foreach (var subject in Model)
+                                {
+                                    <tr style="background-color:#A6A27B; text-align:center">
+                                        <td>@subject.SFSUBJCODE</td> 
+                                        <td>@subject.SFSUBJCOURSECODE</td>
+                                        <td>@subject.SFSUBJREQ</td>
+                                        <td>@subject.SFSUBJCODEREQ</td>
+                                       
+                                        
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    table {
+        border-collapse: collapse;
+        margin: 0;
+        width: 100%;
+    }
+</style>
